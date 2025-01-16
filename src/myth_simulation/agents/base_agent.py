@@ -5,7 +5,6 @@ from typing import List, Optional
 
 class BaseAgent:
 
-    #constructor
     def __init__(self, name: str, parent_a: Optional["BaseAgent"] = None, parent_b: Optional["BaseAgent"] = None):
         self.id = uuid.uuid4()
         self.name = name

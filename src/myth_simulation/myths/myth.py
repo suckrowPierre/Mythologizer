@@ -8,7 +8,7 @@ class Myth:
         self.id = uuid.uuid4()
         self.current_myth = myth_written_out
         self.current_mythemes = List[str]
-        self.retention = 1
+        self.retention = 1.0
         self.original_myth_Id = original_myth_id
 
     def __eq__(self, other):
