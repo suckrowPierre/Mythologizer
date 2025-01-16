@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Any, Callable, Optional
 
 
@@ -11,9 +11,14 @@ class AgentAttribute(ABC):
         return self._value
 
 
-class ChangingAttribute(AgentAttribute):
+class ConstantAgentAttribute(AgentAttribute):
+    def change_value(self, delta: Any) -> None:
+        raise AttributeError("Cannot change value of ConstantValue")
+
+
+class MutableAgentAttribute(AgentAttribute):
     def __init__(
-        self, value: Any, min_value: Optional[Any] = None, max_value: Optional[Any] = None
+            self, value: Any, min_value: Optional[Any] = None, max_value: Optional[Any] = None
     ):
         super().__init__(value)
         self.min = min_value
@@ -35,18 +40,13 @@ class ChangingAttribute(AgentAttribute):
         self.change_value(delta)
 
 
-class ConstantValue(AgentAttribute):
-    def change_value(self, delta: Any) -> None:
-        raise AttributeError("Cannot change value of ConstantValue")
-
-
-class ChangingValue(ChangingAttribute, ABC):
+class DynamicAgentAttribute(MutableAgentAttribute, ABC):
     def __init__(
-        self,
-        value: Any,
-        min_value: Optional[Any] = None,
-        max_value: Optional[Any] = None,
-        change_function: Callable[[Any], Any] = lambda x: x,
+            self,
+            value: Any,
+            min_value: Optional[Any] = None,
+            max_value: Optional[Any] = None,
+            change_function: Callable[[Any], Any] = lambda x: x,
     ):
         super().__init__(value, min_value, max_value)
         self.change_function = change_function
@@ -57,13 +57,13 @@ class ChangingValue(ChangingAttribute, ABC):
         self._value = new_value
 
 
-class Iterator(ChangingValue):
+class IteratingAgentAttribute(DynamicAgentAttribute):
     def __init__(
-        self,
-        value: Any,
-        min_value: Optional[Any] = None,
-        max_value: Optional[Any] = None,
-        delta: Any = 1,
+            self,
+            value: Any,
+            min_value: Optional[Any] = None,
+            max_value: Optional[Any] = None,
+            delta: Any = 1,
     ):
         self.delta = delta
         super().__init__(value, min_value, max_value, self.iterate)

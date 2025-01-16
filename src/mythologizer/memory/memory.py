@@ -1,5 +1,5 @@
 from typing import List, Optional
-from src.myth_simulation.myths.myth import Myth
+from src.mythologizer.myths.myth import Myth
 
 class Memory:
     def __init__(self, size):

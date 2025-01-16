@@ -1,9 +1,9 @@
-from agent_attribute import ChangingAttribute, ConstantValue, Iterator
+from agent_attribute import MutableAgentAttribute, ConstantAgentAttribute, IteratingAgentAttribute
 
 def main():
     print("Testing ChangingAttribute:")
     try:
-        ca = ChangingAttribute(value=10, min_value=0)
+        ca = MutableAgentAttribute(value=10, min_value=0)
         print(f"Initial value: {ca.value}")
         ca.change_value(5)
         print(f"After adding 5: {ca.value}")
@@ -16,7 +16,7 @@ def main():
 
     print("\nTesting ConstantValue:")
     try:
-        cv = ConstantValue(value=100)
+        cv = ConstantAgentAttribute(value=100)
         print(f"Constant value: {cv.value}")
         # This should raise an exception
         cv.change_value(10)
@@ -25,7 +25,7 @@ def main():
 
     print("\nTesting Iterator:")
     try:
-        it = Iterator(value=0, min_value=0, max_value=20, delta=-2)
+        it = IteratingAgentAttribute(value=0, min_value=0, max_value=20, delta=-2)
         for _ in range(6):
             it.change_value()
             print(f"Iterator value: {it.value}")

@@ -1,5 +1,5 @@
 
-from agents import BaseAgent
+from agent import BaseAgent
 
 ## Example Bob meets Larry
 
