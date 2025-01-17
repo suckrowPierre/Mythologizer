@@ -1,7 +1,7 @@
 __version__ = "0.0.1"
 __author__ = "Lilli Kurth, Cele Meunier, Eman Safavi, Pierre-Louis Suckrow"
 
-from .agent_attribute import (
+from mythologizer.agent_attribute import (
     AgentAttribute,
     MutableAgentAttribute,
     ConstantAgentAttribute,
@@ -9,16 +9,15 @@ from .agent_attribute import (
     IteratingAgentAttribute,
 )
 
-from .agent import (
+from mythologizer.agent import (
     BaseAgent,
-    TestAgent,
+    TestAgent
 )
 
 __all__ = [
     "AgentAttribute",
     "MutableAgentAttribute",
     "ConstantAgentAttribute",
-    "DynamicAgentAttribute",
     "IteratingAgentAttribute",
     "BaseAgent",
     "TestAgent"
