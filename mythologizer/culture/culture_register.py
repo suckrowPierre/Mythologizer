@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, Field, UUID4, StrictInt
 
-from mythologizer.culture import Culture
+from .culture import Culture
 
 logger = logging.getLogger(__name__)
 
