@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 class RandomNumberGenerator:
     def __init__(self, seed: Optional[int] = None):
         self.numpy_rng = np.random.default_rng(seed)
-        self.distributions = ProbabilityDistributionMap(distributions=[
+        self.distributions_map = ProbabilityDistributionMap(distributions=[
             ProbabilityDistribution(
                 name="beta",
                 mapping=self.numpy_rng.beta,
