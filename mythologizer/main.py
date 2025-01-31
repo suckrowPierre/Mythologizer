@@ -1,6 +1,7 @@
 from mythologizer.culture import Culture, CultureRegister, AttributeDistribution, AttributesDistributions
 from mythologizer.random_number_generator import RandomNumberGenerator as RNG
 from mythologizer.llm import gtp4o_culture_agent_attribute_distribution_map
+from mythologizer.agent_attribute import ConstantAgentAttribute, AgentAttribute
 import logging
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -15,6 +16,10 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.DEBUG,
                         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
+    speed = ConstantAgentAttribute(name='Speed', description='Constant speed', value=10)
+
+
+    """
     rng = RNG(1)
     openai_client = OpenAI(api_key=os.getenv("OPENAI_KEY"))
 
@@ -24,12 +29,12 @@ if __name__ == "__main__":
                                                                agent_attribute_names=["happy", "evil", "helpfulness", "talkative"],
                                                                culture_name="Witches",
                                                                culture_description="Witches are a mystical culture with deep connections to nature and magic. They value wisdom, secrecy, and the balance of natural forces.")
-
+    
     print(att_dists)
 
                                                                             
 
-
+    """
 
 
     """
