@@ -1,12 +1,7 @@
-from .base_agent import (
-    BaseAgent
-)
-
-from .test_agent import (
-    TestAgent
+from .agent import (
+    Agent
 )
 
 __all__ = [
-    "BaseAgent",
-    "TestAgent"
+    "Agent",
 ]

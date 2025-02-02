@@ -12,9 +12,27 @@ def ensure_list(item_or_list: Union[T, List[T]]) -> List[T]:
     return item_or_list if isinstance(item_or_list, list) else [item_or_list]
 
 
+def pluralize(word: str) -> str:
+    """
+    Pluralize a word using a very simple set of rules:
+      - If the word already ends with 's', assume it is plural and return it as-is.
+      - If the word ends with a consonant followed by 'y', replace 'y' with 'ies'.
+      - If the word ends with sh, ch, x or z, add 'es'.
+      - Otherwise, add 's'.
+    """
+    if word.endswith('s'):
+        return word
+    elif word.endswith('y') and len(word) > 1 and word[-2].lower() not in 'aeiou':
+        return word[:-1] + 'ies'
+    elif word.endswith(('sh', 'ch', 'x', 'z')):
+        return word + 'es'
+    else:
+        return word + 's'
+
+
 class KeyConfig(BaseModel):
-    prop_name: str         # Name for dynamic property access (e.g. "names")
-    attr_name: str         # Attribute on each record (e.g. "name")
+    prop_name: str  # Name for dynamic property access (e.g. "names")
+    attr_name: str  # Attribute on each record (e.g. "name")
     expected_type: Type[Any]  # Expected type (e.g. str, uuid.UUID)
 
     @validator("prop_name")
@@ -46,12 +64,48 @@ class Registry(BaseModel, Generic[T]):
         logger.debug(f"Registry initialized for {rec_type}.")
 
     def __getattr__(self, name: str) -> Any:
-        """Dynamically expose each key config as a property."""
-        for cfg in self.key_configs:
-            if cfg.prop_name == name:
-                values = [getattr(rec, cfg.attr_name) for rec in self.records]
-                logger.debug(f"Accessed dynamic property '{name}': {values}")
-                return values
+        """
+        Dynamically expose each attribute of the record type as a property,
+        using its pluralized form as the property name.
+        For instance, if the record type has an attribute 'name', then
+        `registry.names` will return a list of the 'name' values from each record.
+        """
+        # Determine the record type.
+        # First try from the records; if none exist, then attempt to retrieve it from the generic parameter.
+        record_type = None
+        if self.records:
+            record_type = type(self.records[0])
+        else:
+            try:
+                record_type = self.__orig_class__.__args__[0]
+            except AttributeError:
+                pass
+
+        if record_type is None:
+            raise AttributeError("Cannot determine record type for dynamic attribute access.")
+
+        # Try to get attribute names from the record type.
+        if hasattr(record_type, '__fields__'):
+            # For pydantic models.
+            attr_names = list(record_type.__fields__.keys())
+        elif hasattr(record_type, '__annotations__'):
+            attr_names = list(record_type.__annotations__.keys())
+        else:
+            # Fallback: use public, non-callable attributes from dir().
+            attr_names = [
+                attr for attr in dir(record_type)
+                if not attr.startswith("_") and not callable(getattr(record_type, attr))
+            ]
+
+        # Build a mapping from the pluralized attribute name to the original (singular) name.
+        plural_to_singular = {pluralize(attr): attr for attr in attr_names}
+
+        if name in plural_to_singular:
+            singular = plural_to_singular[name]
+            values = [getattr(rec, singular) for rec in self.records]
+            logger.debug(f"Accessed dynamic property '{name}': {values}")
+            return values
+
         raise AttributeError(f"{self.__class__.__name__} has no attribute '{name}'")
 
     def __str__(self) -> str:
@@ -97,7 +151,8 @@ class Registry(BaseModel, Generic[T]):
                     logger.debug(f"No record found with {cfg.prop_name} == {key_value}.")
                     return None
                 if len(indices) > 1:
-                    raise ValueError(f"Ambiguous key value {key_value} for key '{cfg.prop_name}'; multiple records found.")
+                    raise ValueError(
+                        f"Ambiguous key value {key_value} for key '{cfg.prop_name}'; multiple records found.")
                 logger.debug(f"Resolved key {key_value} to index {indices[0]} using key '{cfg.prop_name}'.")
                 return indices[0]
         logger.debug(f"No key config found matching type {type(key_value)} for value {key_value}.")
@@ -137,3 +192,9 @@ class Registry(BaseModel, Generic[T]):
         for i in indices:
             rec = self.records.pop(i)
             logger.debug(f"Deleted record at index {i}: {rec}. Total records: {len(self.records)}.")
+
+    def __len__(self):
+        return len(self.records)
+
+    def clear(self):
+        self.records.clear()

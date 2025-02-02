@@ -41,4 +41,5 @@ class AttributesDistributions(BaseModel):
             attr.distribution.sample(parameters=attr.parameters, size=n_agents)
             for attr in self.attributes_distributions
         ]
+        #TODO rotate this beause row and cols shiffted from orginal idea.
         return np.vstack(samples)
