@@ -3,7 +3,7 @@ from mythologizer.random_number_generator import RandomNumberGenerator as RNG
 from mythologizer.llm import gtp4o_culture_agent_attribute_distribution_map
 from mythologizer.agent_attribute import AgentAttribute
 from mythologizer.agent import Agent
-from mythologizer.population import Population
+from mythologizer.population import AgentAttributeMatrix
 import logging
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -25,9 +25,9 @@ if __name__ == "__main__":
     agents = [bob, larry]
     attributes = [speed, health, confidence]
 
-    agent_matrix = Population(agent_attributes=attributes, agents=agents)
-    print(agent_matrix.attribute_agent_matrix)
-    print(agent_matrix.attribute_agent_matrix.dtype)
+    agent_matrix = AgentAttributeMatrix(agent_attributes=attributes, agents=agents)
+    print(agent_matrix.matrix)
+    print(agent_matrix.matrix.dtype)
 
 
     """

@@ -15,7 +15,7 @@ def gtp4o_culture_agent_attribute_distribution_map(
         n_max_retries=5,
 ):
     # TODO later refactor agent_attribute_names to list of agent_attribute to use validation for max and min value (in prompt and in the end)
-
+    # TODO implement retries
     def create_distribution_choice(distribution_list: List[Dict[str, List[str]]]):
         parameter_classes = []
         distribution_names = []
