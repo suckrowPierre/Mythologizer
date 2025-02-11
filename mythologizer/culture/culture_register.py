@@ -1,6 +1,6 @@
 import logging
 from typing import List, Union, Iterator, TypeVar, Generic
-from uuid import UUID
+import uuid
 from pydantic import BaseModel, Field, UUID4, StrictInt
 
 from .culture import Culture

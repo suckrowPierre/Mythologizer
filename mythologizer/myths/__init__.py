@@ -1,1 +1,5 @@
-from myth import Myth
+from .myth import Myth
+
+__all__ = [
+    'Myth',
+]

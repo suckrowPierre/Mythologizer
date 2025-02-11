@@ -1,11 +1,12 @@
-from typing import Any
+from typing import Any, List, Set
 import logging
 import uuid
 from pydantic import BaseModel, Field, UUID4
 
+from .attribute_distribution import AttributesDistributions
+
 logger = logging.getLogger(__name__)
 
-from .attribute_distribution import AttributesDistributions
 
 class Culture(BaseModel):
     """
@@ -15,6 +16,8 @@ class Culture(BaseModel):
     description: str
     id: UUID4 = Field(default_factory=uuid.uuid4)
     attribute_distributions: AttributesDistributions = AttributesDistributions()
+    active_member_ids: Set[UUID4] = Field(default_factory=set)
+    past_member_ids: Set[UUID4] = Field(default_factory=set)
 
     def __init__(self, **data: Any) -> None:
         """
@@ -44,6 +47,7 @@ class Culture(BaseModel):
     def __repr__(self):
         return f"'Culture {self.name}', id: {self.id}, description: {self.description}"
 
-    def get_attributes_prob_distribution_from_name_and_description(self, agent_attributes, probability_functions, transform_function):
+    def get_attributes_prob_distribution_from_name_and_description(self, agent_attributes, probability_functions,
+                                                                   transform_function):
         # TODO: self.attribute_distribution = transform_function(agent_attributes, name, description)
         pass

@@ -64,47 +64,39 @@ class Registry(BaseModel, Generic[T]):
         logger.debug(f"Registry initialized for {rec_type}.")
 
     def __getattr__(self, name: str) -> Any:
-        """
-        Dynamically expose each attribute of the record type as a property,
-        using its pluralized form as the property name.
-        For instance, if the record type has an attribute 'name', then
-        `registry.names` will return a list of the 'name' values from each record.
-        """
-        # Determine the record type.
-        # First try from the records; if none exist, then attempt to retrieve it from the generic parameter.
-        record_type = None
+        # 1) Normal lookup first
+        try:
+            return super().__getattribute__(name)
+        except AttributeError:
+            pass
+
+        # 2) Now do your dynamic property logic
         if self.records:
             record_type = type(self.records[0])
         else:
-            try:
-                record_type = self.__orig_class__.__args__[0]
-            except AttributeError:
-                pass
+            # Fallback logic without referencing __orig_class__
+            # (or do so only via object.__getattribute__)
+            record_type = None
 
         if record_type is None:
             raise AttributeError("Cannot determine record type for dynamic attribute access.")
 
-        # Try to get attribute names from the record type.
+        # Use whichever approach your dynamic logic needs:
         if hasattr(record_type, '__fields__'):
-            # For pydantic models.
             attr_names = list(record_type.__fields__.keys())
         elif hasattr(record_type, '__annotations__'):
             attr_names = list(record_type.__annotations__.keys())
         else:
-            # Fallback: use public, non-callable attributes from dir().
+            # fallback
             attr_names = [
                 attr for attr in dir(record_type)
                 if not attr.startswith("_") and not callable(getattr(record_type, attr))
             ]
 
-        # Build a mapping from the pluralized attribute name to the original (singular) name.
         plural_to_singular = {pluralize(attr): attr for attr in attr_names}
-
         if name in plural_to_singular:
             singular = plural_to_singular[name]
-            values = [getattr(rec, singular) for rec in self.records]
-            logger.debug(f"Accessed dynamic property '{name}': {values}")
-            return values
+            return [getattr(rec, singular) for rec in self.records]
 
         raise AttributeError(f"{self.__class__.__name__} has no attribute '{name}'")
 
@@ -169,15 +161,23 @@ class Registry(BaseModel, Generic[T]):
             raise KeyError(f"Key {key} not found.")
         return idx
 
-    def _resolve_indices(self, keys: Union[Any, List[Any]]) -> List[int]:
-        """Return a list of indices corresponding to a single key or list of keys."""
-        return [self._resolve_index(k) for k in ensure_list(keys)]
+    def _resolve_indices(self, keys: Union[Any, List[Any], set[Any]]) -> List[int]:
+        """
+        Return a list of record indices corresponding to a single key,
+        a list of keys, or a set of keys.
+        """
+        if isinstance(keys, set):
+            keys = list(keys)
+        else:
+            keys = ensure_list(keys)
 
-    def __getitem__(self, key: Union[int, Any, List[Any]]) -> Union[T, List[T]]:
+        return [self._resolve_index(k) for k in keys]
+
+    def __getitem__(self, key: Union[int, Any, List[Any], set[Any]]) -> Union[T, List[T]]:
         indices = self._resolve_indices(key)
         return self.records[indices[0]] if len(indices) == 1 else [self.records[i] for i in indices]
 
-    def __setitem__(self, key: Union[int, Any, List[Any]], value: Union[T, List[T]]) -> None:
+    def __setitem__(self, key: Union[int, Any, List[Any], set[Any]], value: Union[T, List[T]]) -> None:
         indices = self._resolve_indices(key)
         values = ensure_list(value)
         if len(indices) != len(values):
@@ -187,7 +187,7 @@ class Registry(BaseModel, Generic[T]):
             self.records[i] = val
             logger.debug(f"Updated record at index {i} to {val}.")
 
-    def __delitem__(self, key: Union[int, Any, List[Any]]) -> None:
+    def __delitem__(self, key: Union[int, Any, List[Any], set[Any]]) -> None:
         indices = sorted(self._resolve_indices(key), reverse=True)
         for i in indices:
             rec = self.records.pop(i)
@@ -195,6 +195,10 @@ class Registry(BaseModel, Generic[T]):
 
     def __len__(self):
         return len(self.records)
+
+    def __iter__(self):
+        """Allow iteration over the records in the registry."""
+        return iter(self.records)
 
     def clear(self):
         self.records.clear()

@@ -1,49 +1,57 @@
-from typing import List, Optional
+from typing import Set
 import uuid
+from pydantic import BaseModel, Field
 
 
-class Myth:
+class Myth(BaseModel):
+    """
+    Represents a myth with its narrative, associated themes, and a unique identifier.
+    """
+    id: uuid.UUID = Field(default_factory=uuid.uuid4)
+    current_myth: str
+    mythemes: Set[str]
+    retention: float = 1.0
+    # original_myth_id: uuid.UUID TODO: currently dont know what to do with this.
 
-    def __init__(self, myth_written_out, mythemes, original_myth_id):
-        self.id = uuid.uuid4()
-        self.current_myth = myth_written_out
-        self.current_mythemes = List[str]
-        self.retention = 1.0
-        self.original_myth_Id = original_myth_id
-
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
+        """
+        Override equality to compare only the unique `id` field.
+        """
+        if not isinstance(other, Myth):
+            return NotImplemented
         return self.id == other.id
 
-    def same_old_myth(self, other) -> bool:
-        return self.original_myth_Id == other.original_myth_Id
+    def same_old_myth(self, other: 'Myth') -> bool:
+        """
+        Check if two myths originated from the same original myth.
 
-    def compare_mythemes(self, other) -> float:
-    ### 0 is no similarity, 1 is identical
-    ### use fuzzy matching to compare mythemes
-    ### maybe embeddings ? maybe spacy??
-        return 0
+        Args:
+            other (Myth): Another myth instance to compare against.
 
-    def compare_written_out_myth(self, other) -> float:
-    ### 0 is no similarity, 1 is identical
-    ### maybe embeddings ? maybe spacy??
-        return 0
+        Returns:
+            bool: True if both myths share the same original_myth_id; False otherwise.
+        """
+        return self.original_myth_id == other.original_myth_id
 
-    def modify_retention(self, delta: float):
-        self.retention = self.retention + delta
-        if self.retention < 0:
-            ## TODO: save dying myths somwehere
-            del self
+    def compare_mythemes(self, other: 'Myth') -> float:
+        """
+        Compare the mythemes of this myth with another myth.
 
+        Returns the ratio of the size of the intersection to the size of the union
+        of the mythemes sets. If both sets are empty, returns 0.0.
 
-    def merge_with_myth(self, other, weight: float, merge_function):
+        Args:
+            other (Myth): Another myth instance whose mythemes will be compared.
 
-        # weight = weight_larry
-        # 1 = weight_bob + weight_larry
-        weight_given_myth = (1 - weight)
+        Returns:
+            float: The similarity ratio of the mythemes sets.
+        """
+        # TODO: make use of embeddings
 
-        updated_myth = merge_function(self, weight, other, weight_given_myth)
-        self = updated_myth
+        intersection = self.mythemes & other.mythemes
+        union = self.mythemes | other.mythemes
 
-        # update mythemes
+        if not union:
+            return 0.0
 
-        #result merged text
+        return len(intersection) / len(union)

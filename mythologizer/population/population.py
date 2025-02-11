@@ -126,4 +126,5 @@ class Population(BaseModel):
 
     def reset_indices(self) -> None:
         for agent in self.agents.value():
+            logger.debug(f"Set agent {agent.id} index to None")
             agent.index = None

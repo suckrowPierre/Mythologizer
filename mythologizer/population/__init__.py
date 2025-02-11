@@ -1,5 +1,5 @@
-from .agent_matrix import Population
+from .population import Population
 
 __all__ = [
-    "Population",
+    "Population"
 ]

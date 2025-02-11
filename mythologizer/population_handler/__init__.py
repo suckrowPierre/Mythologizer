@@ -1,5 +1,5 @@
-from .population_handler import PopulationHandler
+from .agent_lifecycle_manager import AgentLifecycleManager
 
 __all__ = [
-    "PopulationHandler"
+    "AgentLifecycleManager"
 ]

@@ -4,7 +4,7 @@ from .attribute_distribution import AttributesDistributions, AttributeDistributi
 
 __all__ = [
     "Culture",
-    "CultureRegister",
+    "CultureRegistry",
     "AttributeDistribution",
     "AttributesDistributions"
 ]

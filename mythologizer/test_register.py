@@ -1,7 +1,7 @@
-from mythologizer.culture import Culture, CultureRegister, AttributeDistribution, AttributesDistributions
+from mythologizer.culture import Culture, CultureRegistry, AttributeDistribution, AttributesDistributions
 from mythologizer.random_number_generator import RandomNumberGenerator as RNG
 from mythologizer.llm import gtp4o_culture_agent_attribute_distribution_map
-from mythologizer.agent_attribute import AgentAttribute, AgentAttributeRegister
+from mythologizer.agent_attribute import AgentAttribute, AgentAttributeRegistry
 from mythologizer.agent import Agent
 from mythologizer.registry import Registry, KeyConfig
 import logging

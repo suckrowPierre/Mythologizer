@@ -6,7 +6,7 @@ from mythologizer.agent import Agent
 from mythologizer.registry import Registry, KeyConfig
 from mythologizer.population import Population
 from mythologizer.agent_attribute_matrix import AgentAttributeMatrix
-from mythologizer.population_handler import PopulationHandler
+from mythologizer.population_handler import AgentLifecycleManager
 import logging
 from openai import OpenAI
 from dotenv import load_dotenv
@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     attributes = [speed, health, confidence]
 
-    population_handler = PopulationHandler(agents=agents, agent_attributes=attributes)
+    population_handler = AgentLifecycleManager(agents=agents, agent_attributes=attributes)
     print(population_handler.agent_attribute_matrix.matrix)
     print(f"index of agent larry in matrix {population_handler.get_index_from_agent_uuid(larry.id)}")
     population_handler.kill_agent(konstantin)
