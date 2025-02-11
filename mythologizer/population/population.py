@@ -98,15 +98,24 @@ class Population(BaseModel):
         """
         return len(self.alive_agents) + len(self.dead_agents)
 
-    def __getitem__(self, key: UUID4) -> Agent:
+    def __getitem__(self, key: Union[UUID4, str]) -> Agent:
         """
-        Retrieves an agent by id, searching among alive and dead agents.
+        Retrieves an agent either by id (UUID4) or by name (string).
+
+        - If a UUID is provided, it searches among alive and dead agents as before.
+        - If a string is provided, it searches for an agent whose `name` attribute matches the string.
         """
-        if key in self.alive_agents:
-            return self.alive_agents[key]
-        if key in self.dead_agents:
-            return self.dead_agents[key]
-        raise KeyError(f"Agent with id {key} not found.")
+        if isinstance(key, str):
+            for agent in self.agents.values():
+                if agent.name == key:
+                    return agent
+            raise KeyError(f"Agent with name '{key}' not found.")
+        else:
+            if key in self.alive_agents:
+                return self.alive_agents[key]
+            if key in self.dead_agents:
+                return self.dead_agents[key]
+            raise KeyError(f"Agent with id {key} not found.")
 
     def __setitem__(self, key: UUID4, value: Agent) -> None:
         """

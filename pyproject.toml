@@ -18,6 +18,8 @@ pydantic = "^2.10.6"
 numpy = "^2.2.2"
 openai = "^1.60.2"
 python-dotenv = "^1.0.1"
+fastapi = "^0.115.8"
+uvicorn = "^0.34.0"
 
 
 [build-system]
