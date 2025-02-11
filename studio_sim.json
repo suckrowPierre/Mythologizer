@@ -1,0 +1,406 @@
+{
+  "cultures": [
+    {
+      "id": "dc",
+      "name": "Design & Computation students",
+      "description": "Members of this culture think transdisciplinary, research scientific topics collaboratively and use artistic methods to present and communicate findings. They have diverse academic backgrounds but are united by their love for creative exploration of multi-dimensional research questions."
+    },
+    {
+      "id": "artist",
+      "name": "Artist & Performers",
+      "description": "Members of this culture are highly creative and have a strong urge to create. They are characterized by out-of-box thinking and having innovative ideas. They have a fascination for the history of art and study the masters that came before them."
+    },
+    {
+      "id": "activist",
+      "name": "Activists",
+      "description": "Members of this culture are highly active in political discourses and are fighting to bring about political or social change. They are very secure in their beliefs and share them loudly with the public."
+    },
+    {
+      "id": "geeks",
+      "name": "Geeks",
+      "description": "Members of this culture are knowledgeable about and obsessively interested in a particular subject, especially one that is technical or of specialist or niche interest. They engage in or discuss technical or computer-related tasks obsessively and with great attention to detail."
+    },
+    {
+      "id": "iranian",
+      "name": "Iranian",
+      "description": "Iranian culture is a rich tapestry of ancient traditions, poetry, and hospitality, where deep-rooted artistic and intellectual heritage blends with a warm, communal spirit that values generosity and storytelling. Iran’s culture celebrates beauty, wisdom, and the power of human connection."
+    },
+    {
+      "id": "egyptian",
+      "name": "Egyptian",
+      "description": "Egyptian culture is a captivating fusion of ancient heritage and vibrant modern traditions, where history, hospitality, and a deep sense of community shape daily life. From the awe-inspiring legacy of the pharaohs and mesmerizing Arabic calligraphy to lively music, flavorful cuisine, and warm gatherings, Egypt celebrates a rich and enduring cultural identity."
+    },
+    {
+      "id": "turkish",
+      "name": "Turkish",
+      "description": "Turkish culture is a vibrant fusion of ancient traditions and modern influences, where hospitality is a core value, and guests are treated with warmth and generosity. With a deep appreciation for music, art, and cuisine, Turkish people take pride in their heritage while embracing diversity and connection."
+    },
+    {
+      "id": "german",
+      "name": "German",
+      "description": "German culture is built on a strong foundation of efficiency, innovation, and precision, while also valuing deep intellectual and artistic traditions. From world-class engineering and philosophy to a love for nature and sustainability, Germans balance hard work with a rich appreciation for community, culture, and quality of life."
+    },
+    {
+      "id": "bosnian",
+      "name": "Bosnian",
+      "description": "Bosnian culture is a beautiful blend of Eastern and Western influences, shaped by a history of resilience, hospitality, and strong community bonds. From heartfelt sevdalinka music and rich coffee culture to the warmth of its people and the tradition of welcoming guests with open arms, Bosnia celebrates a deep appreciation for family, heritage, and togetherness."
+    },
+    {
+      "id": "american",
+      "name": "American",
+      "description": "American culture is a dynamic mix of diversity, innovation, and individuality, where people from all backgrounds contribute to a constantly evolving society. With a spirit of creativity, ambition, and openness, the U.S. thrives on cultural expression—from music, film, and technology to a strong tradition of community, optimism, and the pursuit of dreams."
+    },
+    {
+      "id": "bulgarian",
+      "name": "Bulgarian",
+      "description": "Bulgarian culture is a rich blend of ancient traditions, folklore, and warm hospitality, where music, dance, and storytelling play a vital role in daily life. From the breathtaking melodies of traditional bagpipes to vibrant festivals and the deep appreciation for nature and family, Bulgaria embraces a strong sense of heritage, resilience, and community."
+    },
+    {
+      "id": "canadian",
+      "name": "Canadian",
+      "description": "Canadian culture is defined by its inclusivity, diversity, and deep connection to nature, where people value kindness, multiculturalism, and community spirit. From breathtaking landscapes and Indigenous traditions to a strong appreciation for the arts, hockey, and maple syrup, Canada embraces a harmonious blend of heritage, progress, and warmth."
+    },
+    {
+      "id": "chinese",
+      "name": "Chinese",
+      "description": "Chinese culture is a profound blend of ancient wisdom and modern innovation, deeply rooted in traditions of respect, family values, and artistic excellence. From breathtaking calligraphy and cuisine to vibrant festivals like the Lunar New Year, China embraces a rich heritage of philosophy, craftsmanship, and collective harmony."
+    },
+    {
+      "id": "british",
+      "name": "British",
+      "description": "British culture is a unique blend of deep-rooted traditions and modern creativity, where history, literature, and innovation thrive side by side. From the charm of afternoon tea and historic landmarks to world-class music, humor, and a strong sense of community, the UK embraces both heritage and forward-thinking spirit."
+    }
+  ],
+
+  "attributes": [
+    {
+      "name": "Age",
+      "description": "Age of the agent",
+      "type": "int",
+      "min": 0,
+      "max": null,
+      "epoch_change_function": "epoch_iterate"
+    },
+    {
+      "name": "Confidence",
+      "description": "The confidence of the agent",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Emotionality",
+      "description": "The emotionality of the agent with 0 representing a very emotionless person and 1 representing a very emotional person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Creativity",
+      "description": "The creativity of the agent with 0 representing a non-creative person and 1 representing a very creative person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Talkativeness",
+      "description": "The talkativeness of the agent with 0 representing a non-talkative person and 1 representing a very talkative person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Popularity",
+      "description": "The popularity of the agent with 0 representing a not popular person and 1 representing a very popular person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Funiness",
+      "description": "The funniness of the agent with 0 representing an unfunny person and 1 representing a very funny person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Loneliness",
+      "description": "The loneliness of the agent with 0 representing a person who is more of a loner and 1 representing a very community-oriented person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Stubbornness",
+      "description": "The stubbornness of the agent with 0 representing a very submissive person and 1 representing a very stubborn person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Organization",
+      "description": "The level of organization of the agent with 0 representing a very chaotic person and 1 representing a very organized person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Superstitiousness",
+      "description": "The level of superstition of the agent with 0 representing a very rational person and 1 representing a very superstitious person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Mysteriousness",
+      "description": "The level of mysteriousness of the agent with 0 representing a non-mysterious person and 1 representing a very mysterious person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Clumsiness",
+      "description": "The level of clumsiness of the agent with 0 representing a well-handled person and 1 representing a very clumsy person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Calmness",
+      "description": "The level of calmness of the agent with 0 representing a hectic person and 1 representing a very calm person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Smartness",
+      "description": "The level of smartness of the agent with 0 representing a slow person and 1 representing a very smart person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Closeness to Nature",
+      "description": "The level of how close an agent is to nature with 0 representing an indoors person and 1 representing a very active and outdoorsy person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Tech Savvy",
+      "description": "The level of tech-savviness of the agent with 0 representing a non-technical person and 1 representing a very technology-affine person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Craftiness",
+      "description": "The level of craftiness of the agent with 0 representing a non-crafty person and 1 representing a very crafty person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": null
+    },
+    {
+      "name": "Absurdity",
+      "description": "The level of absurdity of the agent with 0 representing a logical person and 1 representing a very absurd person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Rebelliousness",
+      "description": "The level of rebelliousness of the agent with 0 representing a rule-following person and 1 representing a very rebellious person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Recollection",
+      "description": "The level of recollection of the agent with 0 representing a very forgetful person and 1 representing a person with a good memory",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    }
+  ],
+
+  "agents": [
+    {
+      "name": "maryam",
+      "culture_ids": ["dc", "geeks", "iranian"],
+      "myths": [
+        {
+          "current_myth": "In a world where boundaries blurred, a hero named Orion stood at the edge of a cliff, seeking to breach the realm above. A mysterious figure, neither man nor beast, appeared beside him. \"I am Liminal,\" it said, \"I walk the lines between worlds.\" Liminal stretched out a hand, and a pillar of wind lifted Orion, raising him to the sky. There, Orion battled star-beasts and claimed a celestial map. But the sky refused to release him, its winds howling in defiance. Below, Liminal chanted, its voice echoing through the realms. The border between earth and sky shimmered, and Orion plummeted, the map clutched tight. Liminal caught him, their hands meeting at the threshold, and together, they stepped back onto solid ground. The map unfurled, revealing secrets to traverse the worlds, borderlines now mere paths for Orion to tread.",
+          "mythemes": [
+            "The hero",
+            "Raises the hero to the sky",
+            "Helps the hero return to earth",
+            "Helps the hero overcome borderlines between worlds"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "lilli",
+      "culture_ids": ["dc", "artist", "german"],
+      "myths": [
+        {
+          "current_myth": "The hero stood, arms outstretched, as the ancient crone raised her gnarled staff. With a cry, she struck the earth, and the hero was lifted, spiraling into the sky, swallowed by clouds. The crone whispered secrets to the wind, which carried the hero gently back to the ground. She pressed a stone into his palm, its surface swirling with worlds unseen. With her guidance, he stepped through borders once impervious, becoming a bridge between realms, a wanderer of worlds.",
+          "mythemes": [
+            "The hero",
+            "Raises the hero to the sky",
+            "Helps the hero return to earth",
+            "Helps the hero overcome borderlines between worlds"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "sarah",
+      "culture_ids": ["dc", "artist", "activist", "egyptian"],
+      "myths": [
+        {
+          "current_myth": "The crone, ancient and bent, raised her staff. With a cry, she struck the earth, and the hero ascended, spiraling into the heavens. The crone's lips moved in silent incantation, her hands tracing patterns in the air. Gently, the hero descended, feet touching the ground, eyes wide with wonder. She handed him a stone, its surface shimmering with worlds unseen. \"Step through,\" she whispered, and he did, boundaries dissolving, worlds merging at his touch.",
+          "mythemes": [
+            "The crone",
+            "Raises the hero to the sky",
+            "Helps the hero return to earth",
+            "Helps the hero overcome borderlines between worlds"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "harun",
+      "culture_ids": ["dc", "geeks", "bosnian"],
+      "myths": [
+        {
+          "current_myth": "The crone, eyes like embers, leaned close. \"Eternal life,\" she whispered, \"if you do my bidding, against your heart's cry.\" The hero hesitated, then nodded. She cackled, pressing a stone into his palm. \"Step through,\" she urged, pointing to a shimmering boundary. He did, gasping as worlds shifted around him. With each border crossed, his convictions frayed, life stretching endless before him, a bittersweet promise kept.",
+          "mythemes": [
+            "The crone",
+            "Promises the hero eternal life if he goes against his convictions and does her a favor",
+            "Helps the hero overcome borderlines between worlds"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "sena",
+      "culture_ids": ["dc", "artist", "activist", "turkish"],
+      "myths": [
+        {
+          "current_myth": "The crone, eyes like embers, leaned close. \"Eternal life,\" she whispered, \"if you do my bidding, against your heart's cry.\" The hero hesitated, then nodded. She cackled, pressing a stone into his palm. \"Step through,\" she urged, pointing to a shimmering boundary. He did, gasping as worlds shifted around him. With each border crossed, his convictions frayed, life stretching endless before him, a bittersweet promise kept.",
+          "mythemes": [
+            "The crone",
+            "Promises the hero eternal life if he goes against his convictions and does her a favor",
+            "The crone turns into a beast that leads the hero through his quest",
+            "His convictions are strenghtened.",
+            "Helps the hero overcome borderlines between worlds"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "finn",
+      "culture_ids": ["dc", "geeks", "american"],
+      "myths": [
+        {
+          "current_myth": "In the heart of a withered forest, the crone, skin like ancient bark, offered a promise. \"Eternal life, if you betray your honor and do my bidding.\" The hero, steel in his heart, agreed. The crone twisted, bones cracking, flesh warping, until a beast stood before him, eyes burning like embers. It led him through shadows, across rivers of sorrow, and into the veil between worlds. With each step, the hero's convictions frayed, but the beast's strength was his guide, tearing through the borderlines of reality, forging a path towards immortality.",
+          "mythemes": [
+            "The crone",
+            "Promises the hero eternal life if he goes against his convictions and does her a favor",
+            "The crone turns into a beast that leads the hero through his quest",
+            "Helps the hero overcome borderlines between worlds"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "engy",
+      "culture_ids": ["dc", "artist", "egyptian", "german"],
+      "myths": [
+        {
+          "current_myth": "In the heart of a withered forest, the crone, skin like ancient bark, offered a promise. \"Eternal life, if you betray your honor and do my bidding.\" The hero, steel in his heart, agreed. The crone twisted, bones cracking, flesh warping, until a beast stood before him, eyes burning like embers. It led him through shadows, across rivers of sorrow, and into the veil between worlds. With each step, the hero's convictions frayed, but the beast's strength was his guide, tearing through the borderlines of reality, forging a path towards immortality.",
+          "mythemes": [
+            "The crone",
+            "Promises the hero eternal life if he goes against his convictions and does her a favor",
+            "The crone turns into a beast that leads the hero through his quest",
+            "Helps the hero overcome borderlines between worlds"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "paul",
+      "culture_ids": ["dc", "german"],
+      "myths": [
+        {
+          "current_myth": "In the heart of a whispering forest, a crone, skin like ancient bark, offered a promise. \"Eternal life, if you bend your virtues, do my bidding.\" The hero, eyes ablaze with resolve, agreed. The crone twisted, bones cracking, flesh warping, becoming a beast of shadow and sinew. It led him through mires and madness, his quest a echoing nightmare. Victory in hand, the beast turned, eyes burning like embers. \"Eternity, as promised,\" it growled, forcing the hero into the underworld's maw, to live forever in the dark.",
+          "mythemes": [
+            "The crone",
+            "Promises the hero eternal life if he goes against his convictions and does her a favor",
+            "The crone turns into a beast that leads the hero through his quest",
+            "The crone forces the hero to live in the underworld for eternity"
+          ]
+        }
+      ],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "lora",
+      "culture_ids": ["dc", "bulgarian", "geeks"],
+      "myths": [],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "sam",
+      "culture_ids": ["dc", "artist", "canadian"],
+      "myths": [],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "ben",
+      "culture_ids": ["dc", "geeks", "german"],
+      "myths": [],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "kenny",
+      "culture_ids": ["dc", "artist", "activist", "chinese"],
+      "myths": [],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    },
+    {
+      "name": "max",
+      "culture_ids": ["dc", "artist", "geeks", "british"],
+      "myths": [],
+      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+    }
+  ]
+}
