@@ -9,11 +9,10 @@ from mythologizer.agent_attribute import AgentAttribute
 from mythologizer.culture import Culture, CultureRegistry
 from mythologizer.myths import Myth
 from mythologizer.llm import (
-    gtp4o_get_myth_ratio,
-    gtp4o_combine_myth,
-    gtp4o_mutate_myth,
+    ollame_get_myth_ratio,
+    ollama_combine_myth,
+    ollama_mutate_myth,
 )
-from openai import OpenAI
 
 # Configure logger for debugging.
 logger = logging.getLogger(__name__)
@@ -80,7 +79,6 @@ def standard_remember_function(agent_attributes: Dict[str, float], length: int) 
 
 
 def tell_myth(
-        openai_client: OpenAI,
         culture_registry: CultureRegistry,
         listener_agent: Agent,
         listener_agent_values: Dict[str, float],
@@ -98,7 +96,6 @@ def tell_myth(
       - Optionally mutating myths based on their similarity.
 
     Args:
-        openai_client (OpenAI): The OpenAI client used for LLM interactions.
         culture_registry (CultureRegistry): A registry containing cultural context.
         listener_agent (Agent): The agent that listens to the myth.
         listener_agent_values (Dict[str, float]): Attributes for the listener agent.
@@ -172,8 +169,7 @@ def tell_myth(
                                                                                                    1 - ratio)
         logger.debug("combine_myths: Combined myth themes: %s", combined_mythemes)
 
-        combined_story = gtp4o_combine_myth(
-            open_ai_client=openai_client,
+        combined_story = ollama_combine_myth(
             listener=listener_agent,
             listener_values=listener_agent_values,
             speaker=speaker_agent,
@@ -218,7 +214,7 @@ def tell_myth(
         logger.debug("tell_myth: Listener agent memory is empty; adding a mutated copy of the told myth.")
         copy_of_myth = deepcopy(told_myth)
         copy_of_myth.retention = 1.0
-        mutate_myth(openai_client, copy_of_myth, listener_agent, listener_agent_values, culture_registry)
+        mutate_myth(copy_of_myth, listener_agent, listener_agent_values, culture_registry)
         listener_agent.memory.add_myth(copy_of_myth)
         return
 
@@ -240,8 +236,7 @@ def tell_myth(
 
     if similarity_most_similar > 0.3:
         logger.debug("tell_myth: Sufficient similarity found (> 0.3); proceeding to combine myths.")
-        speaker_listener_ratio = gtp4o_get_myth_ratio(
-            open_ai_client=openai_client,
+        speaker_listener_ratio = ollame_get_myth_ratio(
             culture_registry=culture_registry,
             listener_values=listener_agent_values,
             listener=listener_agent,
@@ -260,17 +255,16 @@ def tell_myth(
             logger.debug("tell_myth: Moderate similarity; creating a new myth for the listener.")
             new_myth = Myth(current_myth=combined_story, mythemes=combined_mythemes)
             listener_agent.memory.add_myth(new_myth)
-            mutate_myth(openai_client, new_myth, listener_agent, listener_agent_values, culture_registry)
+            mutate_myth(new_myth, listener_agent, listener_agent_values, culture_registry)
     else:
         logger.debug("tell_myth: No sufficiently similar myth found (similarity <= 0.3); mutating a copy.")
         copy_of_myth = deepcopy(told_myth)
         copy_of_myth.retention = 1.0
-        mutate_myth(openai_client, copy_of_myth, listener_agent, listener_agent_values, culture_registry)
+        mutate_myth(copy_of_myth, listener_agent, listener_agent_values, culture_registry)
         listener_agent.memory.add_myth(copy_of_myth)
 
 
 def mutate_myth(
-        openai_client: OpenAI,
         myth: Myth,
         agent: Agent,
         agent_values: Dict[str, float],
@@ -283,7 +277,6 @@ def mutate_myth(
     is not "leave", it calls an LLM function to generate a mutated narrative and themes for the myth.
 
     Args:
-        openai_client (OpenAI): The OpenAI client used for LLM operations.
         myth (Myth): The myth to potentially mutate.
         agent (Agent): The agent associated with the myth.
         agent_values (Dict[str, float]): The attributes of the agent.
@@ -295,8 +288,7 @@ def mutate_myth(
     logger.debug("mutate_myth: Randomly selected action: %s", random_action)
 
     if random_action != "leave":
-        mutated_story, mutated_mythemes = gtp4o_mutate_myth(
-            open_ai_client=openai_client,
+        mutated_story, mutated_mythemes = ollama_mutate_myth(
             myth=myth,
             culture_registry=culture_registry,
             agent=agent,
