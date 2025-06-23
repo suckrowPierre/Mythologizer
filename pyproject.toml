@@ -1,27 +1,16 @@
-[tool.poetry]
+[project]
 name = "mythologizer"
 version = "0.1.0"
-description = ""
+description = "Add your description here"
 readme = "README.md"
-authors = [
-            "Pierre-Louis Suckrow <suckrowpierre@gmail.com>",
-            "Célestin Meunier",
-            "Lilli Kurth",
-            "Eman Safavi"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115.8",
+    "numpy>=2.2.2",
+    "ollama>=0.4.7",
+    "openai>=1.61.1",
+    "pydantic>=2.10.6",
+    "pytest>=8.3.4",
+    "python-dotenv>=1.0.1",
+    "uvicorn>=0.34.0",
 ]
-urls = { Homepage = "https://github.com/suckrowPierre/Mythologizer" }
-
-[tool.poetry.dependencies]
-python = "^3.13"
-pytest = "^8.3.4"
-pydantic = "^2.10.6"
-numpy = "^2.2.2"
-openai = "^1.60.2"
-python-dotenv = "^1.0.1"
-fastapi = "^0.115.8"
-uvicorn = "^0.34.0"
-
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"

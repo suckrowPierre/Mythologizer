@@ -19,7 +19,7 @@ from mythologizer.memory import Memory
 from mythologizer.population_handler import AgentLifecycleManager
 from mythologizer.population import Population
 from mythologizer.myth_exchange import tell_myth
-from mythologizer.llm import gtp4o_interaction_pair
+from mythologizer.llm import ollame_interaction_pair
 from openai import OpenAI
 
 # Configure logging
@@ -28,6 +28,48 @@ logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
+
+def generate_subtitles(text, video_length=38):
+    # Clean text and split at periods and commas
+    import json
+import re
+
+def generate_subtitles(text, video_length=38):
+    # Clean text and split at periods and commas
+    text = ' '.join(text.strip().split())  # Normalize whitespace
+    splits = [s.strip() for s in re.split(r'[.,]', text) if s.strip()]  # Split by both period and comma
+
+    # Handle case where there is no valid text
+    if not splits:
+        return json.dumps([])  # Return empty JSON array
+
+    # Calculate timing
+    content_duration = video_length - 4
+    segment_duration = content_duration / len(splits)
+
+    subtitles = [{"index": 0, "start": "0.00", "end": "2.00", "text": ""}]
+
+    current_time = 2.0
+    for i, segment in enumerate(splits, 1):
+        end_time = current_time + segment_duration
+        subtitles.append({
+            "index": i,
+            "start": f"{current_time:.2f}",
+            "end": f"{end_time:.2f}",
+            "text": segment.replace('"', '\"')  # Ensure quotes are properly escaped
+        })
+        current_time = end_time
+
+    subtitles.append({
+        "index": len(subtitles),
+        "start": f"{current_time:.2f}",
+        "end": f"{current_time + 2:.2f}",
+        "text": ""
+    })
+
+    return subtitles
+
+ 
 
 
 # --- Epoch Functions (as in your original code) ---
@@ -151,13 +193,33 @@ current_epoch: int = 0
 
 # --- Pydantic Model for API Response ---
 
+class Sub(BaseModel):
+    index: int
+    start: float
+    end: float
+    text: str
+
 class AgentResponse(BaseModel):
     name: str
     epoch: int
     attributes: Dict[str, float]
     mythemes: List[str]
     myth: Optional[str] = None
+    subs: Optional[List[Sub]] = None
 
+
+def get_random_interaction_tuples(n_interactions: int, population: Population) -> List[Tuple]:
+    def get_random_pair():
+        x = random.choice(list(population.alive_agents.values()))
+        y = random.choice(list(population.alive_agents.values()))
+        while y == x:
+            y = random.choice(list(population.alive_agents.values()))
+        return x, y
+
+    return [get_random_pair() for _ in range(n_interactions)]
+
+
+number_interactions=10
 
 # --- Background Simulation Loop ---
 # This function simulates one “epoch” every 10 seconds.
@@ -165,11 +227,39 @@ async def simulation_loop():
     global current_epoch, agent_lifecycle_manager
     while True:
         if agent_lifecycle_manager:
-            # Update agent attributes (as in your simulation)
-            agent_lifecycle_manager.agent_attribute_matrix.apply_epoch_changing_functions()
+            # Offload the heavy simulation work to a thread
+            await asyncio.to_thread(agent_lifecycle_manager.agent_attribute_matrix.apply_epoch_changing_functions)
+
+            pairs = get_random_interaction_tuples(number_interactions, agent_lifecycle_manager.population)
+            for pair in pairs:
+                agent_a, agent_b = pair
+                agent_a_values = agent_lifecycle_manager.agent_attribute_matrix.agent_attribute_register.create_values_dict(
+                    agent_lifecycle_manager.agent_attribute_matrix.matrix[agent_a.index])
+                agent_b_values = agent_lifecycle_manager.agent_attribute_matrix.agent_attribute_register.create_values_dict(
+                    agent_lifecycle_manager.agent_attribute_matrix.matrix[agent_b.index])
+
+                speaker, listener = ollame_interaction_pair(
+                    agent_A=agent_a,
+                    agent_A_values=agent_a_values,
+                    agent_B=agent_b,
+                    agent_B_values=agent_b_values,
+                    culture_registry=agent_lifecycle_manager.culture_registry
+                )
+                if speaker is not None and listener is not None:
+                    logger.info(f"Interaction with {speaker} as a speaker and {listener} as a listener")
+                    # If tell_myth is blocking, offload it as well:
+                    await asyncio.to_thread(
+                        tell_myth,
+                        culture_registry=agent_lifecycle_manager.culture_registry,
+                        speaker_agent=speaker,
+                        speaker_agent_values=agent_a_values if speaker == agent_a else agent_b_values,
+                        listener_agent=listener,
+                        listener_agent_values=agent_b_values if listener == agent_b else agent_a_values
+                    )
+
             current_epoch += 1
-            logger.info(f"Simulation epoch: {current_epoch}")
-        await asyncio.sleep(10)  # Adjust the sleep duration as needed
+            logger.info(f"Current epoch: {current_epoch}")
+        await asyncio.sleep(10)  # Still sleep to yield control
 
 
 # --- Startup Event: Initialize the Simulation ---
@@ -232,16 +322,19 @@ async def get_agent(agent_name: str):
         first_myth = myths[0]
         myth = first_myth.current_myth
         mythemes = list(first_myth.mythemes)
+        subs = generate_subtitles(first_myth.current_myth)
     else:
         myth = None
         mythemes = []
+        subs = []
 
     return AgentResponse(
         name=agent_found.name,
         epoch=current_epoch,
         attributes=attr_values,
         mythemes=mythemes,
-        myth=myth
+        myth=myth,
+        subs=subs
     )
 
 

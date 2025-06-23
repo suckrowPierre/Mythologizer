@@ -1,6 +1,6 @@
 from typing import Union, Literal, List, Dict, Set
 from pydantic import BaseModel, Field, conint, confloat, create_model, UUID4
-from openai import OpenAI
+from ollama import chat
 import numpy as np
 
 from mythologizer.agent import Agent
@@ -8,8 +8,7 @@ from mythologizer.culture import Culture, CultureRegistry
 from mythologizer.myths import Myth
 
 
-def gtp4o_get_myth_ratio(
-        open_ai_client: OpenAI,
+def ollame_get_myth_ratio(
         speaker: Agent,
         speaker_values: List[dict],
         listener: Agent,
@@ -35,20 +34,19 @@ Listener values: {listener_values}
 
     system_prompt = "You are an expert in statistical modeling and cultural analysis."
 
-    response = open_ai_client.beta.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+    response = chat(
+        model="deepseek-r1:7b",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": get_user_prompt()}
         ],
-        response_format=Ratio
+        format=Ratio.model_json_schema(),
     )
-    interaction_choice: Ratio = response.choices[0].message.parsed
+    interaction_choice: Ratio = Ratio.model_validate_json(response.message.content)
     return interaction_choice.ratio
 
 
-def gtp4o_combine_myth(
-        open_ai_client: OpenAI,
+def ollama_combine_myth(
         speaker: Agent,
         speaker_values: List[dict],
         speaker_myth: Myth,
@@ -87,20 +85,19 @@ Ratio: {ratio}
 
     system_prompt = "You are an expert in statistical modeling and cultural analysis."
 
-    response = open_ai_client.beta.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+    response = chat(
+        model="deepseek-r1:7b",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": get_user_prompt()}
         ],
-        response_format=CombinedMyth
+        format=CombinedMyth.model_json_schema(),
     )
-    combined_myth: CombinedMyth = response.choices[0].message.parsed
+    combined_myth: CombinedMyth = CombinedMyth.model_validate_json(response.message.content)
     return combined_myth.myth
 
 
-def gtp4o_mutate_myth(
-        open_ai_client: OpenAI,
+def ollama_mutate_myth(
         agent: Agent,
         agent_values: List[dict],
         myth: Myth,
@@ -129,13 +126,13 @@ action: {action}
 
     system_prompt = "You are an expert in statistical modeling and cultural analysis."
 
-    response = open_ai_client.beta.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+    response = chat(
+        model="deepseek-r1:7b",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": get_user_prompt()}
         ],
-        response_format=MutatedMyth
+        format=MutatedMyth.model_json_schema()
     )
-    mutated_myth: MutatedMyth = response.choices[0].message.parsed
+    mutated_myth: MutatedMyth = MutatedMyth.model_validate_json(response.message.content)
     return mutated_myth.written_out_myth, set(mutated_myth.mythemes)

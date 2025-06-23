@@ -3,7 +3,7 @@
     {
       "id": "dc",
       "name": "Design & Computation students",
-      "description": "Members of this culture think transdisciplinary, research scientific topics collaboratively and use artistic methods to present and communicate findings. They have diverse academic backgrounds but are united by their love for creative exploration of multi-dimensional research questions."
+      "description": "Members of this culture think transdisciplinary, research scientific topics collaboratively and use artistic methods to present and communicate findings. They have diverse academic backgrounds but are united by their love for creative exploration of multi-dimensional research questions. They are interested in the intersection of art, design, and technology. They are young master students, in their mid-20s. They are confident, creative, and talkative. They use the internet a lot and follow the current trends in technology and art, fashion and humour."
     },
     {
       "id": "artist",
@@ -71,7 +71,6 @@
       "description": "British culture is a unique blend of deep-rooted traditions and modern creativity, where history, literature, and innovation thrive side by side. From the charm of afternoon tea and historic landmarks to world-class music, humor, and a strong sense of community, the UK embraces both heritage and forward-thinking spirit."
     }
   ],
-
   "attributes": [
     {
       "name": "Age",
@@ -114,14 +113,6 @@
       "epoch_change_function": "epoch_random_fluctuation"
     },
     {
-      "name": "Popularity",
-      "description": "The popularity of the agent with 0 representing a not popular person and 1 representing a very popular person",
-      "type": "float",
-      "min": 0.0,
-      "max": 1.0,
-      "epoch_change_function": null
-    },
-    {
       "name": "Funiness",
       "description": "The funniness of the agent with 0 representing an unfunny person and 1 representing a very funny person",
       "type": "float",
@@ -154,8 +145,8 @@
       "epoch_change_function": null
     },
     {
-      "name": "Superstitiousness",
-      "description": "The level of superstition of the agent with 0 representing a very rational person and 1 representing a very superstitious person",
+      "name": "Spirtuality",
+      "description": "The level of spirituality of the agent with 0 representing a very rational person and 1 representing a very superstitious person",
       "type": "float",
       "min": 0.0,
       "max": 1.0,
@@ -240,13 +231,48 @@
       "min": 0.0,
       "max": 1.0,
       "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Nerdiness",
+      "description": "The level of nerdiness of the agent with 0 representing a non-nerdy person and 1 representing a very nerdy person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Sociability",
+      "description": "The level of sociability of the agent with 0 representing a very introverted person and 1 representing a very extroverted person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Curiosity",
+      "description": "The level of curiosity of the agent with 0 representing a very uncurious person and 1 representing a very curious person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
+    },
+    {
+      "name": "Ethicality",
+      "description": "The level of ethicality of the agent with 0 representing a very unethical person and 1 representing a very ethical person",
+      "type": "float",
+      "min": 0.0,
+      "max": 1.0,
+      "epoch_change_function": "epoch_random_fluctuation"
     }
   ],
-
   "agents": [
     {
       "name": "maryam",
-      "culture_ids": ["dc", "geeks", "iranian"],
+      "culture_ids": [
+        "dc",
+        "geeks",
+        "iranian"
+      ],
       "myths": [
         {
           "current_myth": "In a world where boundaries blurred, a hero named Orion stood at the edge of a cliff, seeking to breach the realm above. A mysterious figure, neither man nor beast, appeared beside him. \"I am Liminal,\" it said, \"I walk the lines between worlds.\" Liminal stretched out a hand, and a pillar of wind lifted Orion, raising him to the sky. There, Orion battled star-beasts and claimed a celestial map. But the sky refused to release him, its winds howling in defiance. Below, Liminal chanted, its voice echoing through the realms. The border between earth and sky shimmered, and Orion plummeted, the map clutched tight. Liminal caught him, their hands meeting at the threshold, and together, they stepped back onto solid ground. The map unfurled, revealing secrets to traverse the worlds, borderlines now mere paths for Orion to tread.",
@@ -256,13 +282,60 @@
             "Helps the hero return to earth",
             "Helps the hero overcome borderlines between worlds"
           ]
+        },
+        {
+          "current_myth": "In a storm-lashed night, a man named Kai huddled in a cave, his shelter disturbed by a monstrous Ogre. \"Meat!\" the Ogre roared, demanding Kai's limbs. Kai, clever and desperate, offered a bargain. \"First, my weak human parts,\" he said, tossing the Ogre a rabbit's foot from his pack. The Ogre, greedy and dull, swallowed it, growling for more. Kai fed the Ogre a deer's heart, a wolf's eye, each time claiming them as his own. Intrigued, the Ogre offered his own parts in exchange, tearing off a horn, a tooth, swallowing Kai's deceits. As dawn broke, the Ogre, weakened and befuddled, toppled, his life drained by his own greed. Kai emerged, shaken but whole, leaving the Ogre's carcass to rot in the cave.",
+          "mythemes": [
+            "Man hides in shelter",
+            "Ogre demands body parts",
+            "Man deceives ogre with animal parts",
+            "Ogre gives parts of own body",
+            "Ogre dies"
+          ]
+        },
+        {
+          "current_myth": "Water surged, filling the hut, an illusion born of some unseen force. Men scrambled, catching ducks and fish in the swirling chaos. Their laughter was a chorus, echoing as they held their prizes high. Then, as swiftly as it came, the water vanished. Their trophies twisted, feathers and scales melting away, replaced by pulsating flesh—their own, intimately familiar, yet eerily displaced, leaving them gaping, horror etched on their faces.",
+          "mythemes": [
+            "The dwelling fills with water, potentially as an illusion.",
+            "Characters catch waterfowl or fish during the flood.",
+            "When the water recedes, the caught items transform into their own penises or something else"
+          ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "lilli",
-      "culture_ids": ["dc", "artist", "german"],
+      "culture_ids": [
+        "dc",
+        "artist",
+        "german"
+      ],
       "myths": [
         {
           "current_myth": "The hero stood, arms outstretched, as the ancient crone raised her gnarled staff. With a cry, she struck the earth, and the hero was lifted, spiraling into the sky, swallowed by clouds. The crone whispered secrets to the wind, which carried the hero gently back to the ground. She pressed a stone into his palm, its surface swirling with worlds unseen. With her guidance, he stepped through borders once impervious, becoming a bridge between realms, a wanderer of worlds.",
@@ -274,11 +347,41 @@
           ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "sarah",
-      "culture_ids": ["dc", "artist", "activist", "egyptian"],
+      "culture_ids": [
+        "dc",
+        "artist",
+        "activist",
+        "egyptian"
+      ],
       "myths": [
         {
           "current_myth": "The crone, ancient and bent, raised her staff. With a cry, she struck the earth, and the hero ascended, spiraling into the heavens. The crone's lips moved in silent incantation, her hands tracing patterns in the air. Gently, the hero descended, feet touching the ground, eyes wide with wonder. She handed him a stone, its surface shimmering with worlds unseen. \"Step through,\" she whispered, and he did, boundaries dissolving, worlds merging at his touch.",
@@ -290,11 +393,40 @@
           ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "harun",
-      "culture_ids": ["dc", "geeks", "bosnian"],
+      "culture_ids": [
+        "dc",
+        "geeks",
+        "bosnian"
+      ],
       "myths": [
         {
           "current_myth": "The crone, eyes like embers, leaned close. \"Eternal life,\" she whispered, \"if you do my bidding, against your heart's cry.\" The hero hesitated, then nodded. She cackled, pressing a stone into his palm. \"Step through,\" she urged, pointing to a shimmering boundary. He did, gasping as worlds shifted around him. With each border crossed, his convictions frayed, life stretching endless before him, a bittersweet promise kept.",
@@ -305,11 +437,41 @@
           ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "sena",
-      "culture_ids": ["dc", "artist", "activist", "turkish"],
+      "culture_ids": [
+        "dc",
+        "artist",
+        "activist",
+        "turkish"
+      ],
       "myths": [
         {
           "current_myth": "The crone, eyes like embers, leaned close. \"Eternal life,\" she whispered, \"if you do my bidding, against your heart's cry.\" The hero hesitated, then nodded. She cackled, pressing a stone into his palm. \"Step through,\" she urged, pointing to a shimmering boundary. He did, gasping as worlds shifted around him. With each border crossed, his convictions frayed, life stretching endless before him, a bittersweet promise kept.",
@@ -322,11 +484,40 @@
           ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "finn",
-      "culture_ids": ["dc", "geeks", "american"],
+      "culture_ids": [
+        "dc",
+        "geeks",
+        "american"
+      ],
       "myths": [
         {
           "current_myth": "In the heart of a withered forest, the crone, skin like ancient bark, offered a promise. \"Eternal life, if you betray your honor and do my bidding.\" The hero, steel in his heart, agreed. The crone twisted, bones cracking, flesh warping, until a beast stood before him, eyes burning like embers. It led him through shadows, across rivers of sorrow, and into the veil between worlds. With each step, the hero's convictions frayed, but the beast's strength was his guide, tearing through the borderlines of reality, forging a path towards immortality.",
@@ -338,11 +529,41 @@
           ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "engy",
-      "culture_ids": ["dc", "artist", "egyptian", "german"],
+      "culture_ids": [
+        "dc",
+        "artist",
+        "egyptian",
+        "german"
+      ],
       "myths": [
         {
           "current_myth": "In the heart of a withered forest, the crone, skin like ancient bark, offered a promise. \"Eternal life, if you betray your honor and do my bidding.\" The hero, steel in his heart, agreed. The crone twisted, bones cracking, flesh warping, until a beast stood before him, eyes burning like embers. It led him through shadows, across rivers of sorrow, and into the veil between worlds. With each step, the hero's convictions frayed, but the beast's strength was his guide, tearing through the borderlines of reality, forging a path towards immortality.",
@@ -354,11 +575,39 @@
           ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "paul",
-      "culture_ids": ["dc", "german"],
+      "culture_ids": [
+        "dc",
+        "german"
+      ],
       "myths": [
         {
           "current_myth": "In the heart of a whispering forest, a crone, skin like ancient bark, offered a promise. \"Eternal life, if you bend your virtues, do my bidding.\" The hero, eyes ablaze with resolve, agreed. The crone twisted, bones cracking, flesh warping, becoming a beast of shadow and sinew. It led him through mires and madness, his quest a echoing nightmare. Victory in hand, the beast turned, eyes burning like embers. \"Eternity, as promised,\" it growled, forcing the hero into the underworld's maw, to live forever in the dark.",
@@ -370,37 +619,209 @@
           ]
         }
       ],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "lora",
-      "culture_ids": ["dc", "bulgarian", "geeks"],
+      "culture_ids": [
+        "dc",
+        "bulgarian",
+        "geeks"
+      ],
       "myths": [],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "sam",
-      "culture_ids": ["dc", "artist", "canadian"],
+      "culture_ids": [
+        "dc",
+        "artist",
+        "canadian"
+      ],
       "myths": [],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "ben",
-      "culture_ids": ["dc", "geeks", "german"],
+      "culture_ids": [
+        "dc",
+        "geeks",
+        "german"
+      ],
       "myths": [],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "kenny",
-      "culture_ids": ["dc", "artist", "activist", "chinese"],
+      "culture_ids": [
+        "dc",
+        "artist",
+        "activist",
+        "chinese"
+      ],
       "myths": [],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     },
     {
       "name": "max",
-      "culture_ids": ["dc", "artist", "geeks", "british"],
+      "culture_ids": [
+        "dc",
+        "artist",
+        "geeks",
+        "british"
+      ],
       "myths": [],
-      "attribute_values": [1,0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5]
+      "attribute_values": [
+        1,
+        0.1,
+        0.2,
+        0.3,
+        0.4,
+        0.5,
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5,
+        0.5
+      ]
     }
   ]
 }

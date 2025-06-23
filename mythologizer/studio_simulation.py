@@ -1,6 +1,6 @@
 from mythologizer.culture import Culture, AttributeDistribution
 from mythologizer.random_number_generator import RandomNumberGenerator as RNG
-from mythologizer.llm import gtp4o_culture_agent_attribute_distribution_map, gtp4o_interaction_pair
+from mythologizer.llm import gtp4o_culture_agent_attribute_distribution_map, ollame_interaction_pair
 from mythologizer.agent_attribute import AgentAttribute
 from mythologizer.agent import Agent
 from mythologizer.registry import Registry, KeyConfig
@@ -548,10 +548,10 @@ if __name__ == "__main__":
             agent_b_values = agent_lifecycle_manager.agent_attribute_matrix.agent_attribute_register.create_values_dict(
                 agent_lifecycle_manager.agent_attribute_matrix.matrix[agent_b.index])
 
-            speaker, listener = gtp4o_interaction_pair(open_ai_client=openai_client, agent_A=agent_a,
-                                                       agent_A_values=agent_a_values, agent_B=agent_b,
-                                                       agent_B_values=agent_b_values,
-                                                       culture_registry=agent_lifecycle_manager.culture_registry)
+            speaker, listener = ollame_interaction_pair(open_ai_client=openai_client, agent_A=agent_a,
+                                                        agent_A_values=agent_a_values, agent_B=agent_b,
+                                                        agent_B_values=agent_b_values,
+                                                        culture_registry=agent_lifecycle_manager.culture_registry)
             if speaker == agent_a:
                 speaker_values = agent_a_values
                 listener_values = agent_b_values

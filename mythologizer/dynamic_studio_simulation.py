@@ -12,7 +12,7 @@ from mythologizer.memory import Memory
 from mythologizer.population_handler import AgentLifecycleManager
 from mythologizer.population import Population
 from mythologizer.myth_exchange import tell_myth
-from mythologizer.llm import gtp4o_interaction_pair
+from mythologizer.llm import ollame_interaction_pair
 from typing import Any, Dict, Optional, List, Tuple
 import random
 import numpy as np
@@ -212,10 +212,10 @@ def main():
             agent_b_values = agent_lifecycle_manager.agent_attribute_matrix.agent_attribute_register.create_values_dict(
                 agent_lifecycle_manager.agent_attribute_matrix.matrix[agent_b.index])
 
-            speaker, listener = gtp4o_interaction_pair(open_ai_client=openai_client, agent_A=agent_a,
-                                                       agent_A_values=agent_a_values, agent_B=agent_b,
-                                                       agent_B_values=agent_b_values,
-                                                       culture_registry=agent_lifecycle_manager.culture_registry)
+            speaker, listener = ollame_interaction_pair(open_ai_client=openai_client, agent_A=agent_a,
+                                                        agent_A_values=agent_a_values, agent_B=agent_b,
+                                                        agent_B_values=agent_b_values,
+                                                        culture_registry=agent_lifecycle_manager.culture_registry)
             if speaker == agent_a:
                 speaker_values = agent_a_values
                 listener_values = agent_b_values

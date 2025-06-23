@@ -1,6 +1,6 @@
 from typing import Union, Literal, List, Dict
 from pydantic import BaseModel, Field, conint, confloat, create_model, UUID4
-from openai import OpenAI
+from ollama import chat
 import numpy as np
 
 from mythologizer.agent import Agent
@@ -8,8 +8,7 @@ from mythologizer.culture import Culture, CultureRegistry
 
 
 
-def gtp4o_interaction_pair(
-        open_ai_client: OpenAI,
+def ollame_interaction_pair(
         agent_A: Agent,
         agent_A_values: List[dict],
         agent_B: Agent,
@@ -40,15 +39,15 @@ Agent B values: {agent_B_values}
 
     system_prompt = "You are an expert in statistical modeling and cultural analysis."
 
-    response = open_ai_client.beta.chat.completions.parse(
-        model="gpt-4o-2024-08-06",
+    response = chat(
+        model="deepseek-r1:7b",
         messages=[
             {"role": "system", "content": system_prompt},
             {"role": "user", "content": get_user_prompt()}
         ],
-        response_format=InteractionChoice
+        format=InteractionChoice.model_json_schema()
     )
-    interaction_choice: InteractionChoice = response.choices[0].message.parsed
+    interaction_choice: InteractionChoice = InteractionChoice.model_validate_json(response.message.content)
 
     speaker = None
     listener = None
